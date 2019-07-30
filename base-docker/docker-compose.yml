@@ -1,0 +1,72 @@
+version: "3"
+
+services:
+  activeMq:
+    image: docker-active-mq:0.0.1-SNAPSHOT
+    container_name: activemq
+    ports:
+      - 9870:9870
+      - 8161:8161
+    volumes:
+      - activemq:/activemq
+    environment:
+      - CLUSTER_NAME=test
+  
+  catalog:
+    image: catalog:0.0.1-SNAPSHOT
+    container_name: catalog
+    ports:
+      - 8080:8080
+    volumes:
+      - catalog:/catalog
+    environment:
+      - CLUSTER_NAME=test
+
+  price:
+    image: price:0.0.1-SNAPSHOT
+    container_name: price
+    ports:
+      - 8081:8080
+    volumes:
+      - price:/price
+    environment:
+      - CLUSTER_NAME=test
+  
+  user:
+    image: user:0.0.1-SNAPSHOT
+    container_name: user
+    ports:
+      - 8082:8080
+    volumes:
+      - user:/user
+    environment:
+      - CLUSTER_NAME=test
+
+  payment:
+    image: payment:0.0.1-SNAPSHOT
+    container_name: payment
+    ports:
+      - 8083:8080
+    volumes:
+      - payment:/payment
+    environment:
+      - CLUSTER_NAME=test
+  
+  order:
+    image: order:0.0.1-SNAPSHOT
+    container_name: order
+    ports:
+      - 8084:8080
+    volumes:
+      - order:/order
+    environment:
+      - CLUSTER_NAME=test
+  
+volumes:
+  activemq:
+  catalog:
+  order:
+  payment:
+  price:
+  user:
+ 
