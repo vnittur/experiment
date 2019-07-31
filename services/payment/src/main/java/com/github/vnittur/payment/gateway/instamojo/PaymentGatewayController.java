@@ -28,7 +28,35 @@ public class PaymentGatewayController
 	private static final String CLIENT_ID = "test_rSjYc8E8T4AJoSxDocqW3Cvea3fd3fgSgBV";
 	private static final String CLIENT_SECRET = "test_hV2WKX5fhQXSkRqfsgfWMcJVuX9jgz6DD6aPLZUwyQxEgn2BkLQ3KKwdEtQM0RcgrAl6rgWpiot9q3VDo8mmKBRGFJ8JZFiItOqDVSyKqiEaTlvvk4DOiRS4WPq";
 	
-	public void createPaymentOrder()
+	
+	//Rest api exposed to outside world.
+	public Response getPaymentURL()
+	{
+		return null;
+	}
+	
+	public Response getPaymentStatus(String paymentId)
+	{
+		return null;
+	}
+	
+	public Response refundPayment(String paymentId)
+	{
+		return null;
+	}
+	
+	
+	public Response addToCart(String itemId)
+	{
+		return null;
+	}
+	
+	public Response buyFromCart()
+	{
+		return null;
+	}
+	
+	private void createPaymentOrder()
 	{
 		ApiContext context = ApiContext.create(CLIENT_ID, CLIENT_SECRET, ApiContext.Mode.TEST);
 		Instamojo api = new InstamojoImpl(context);
