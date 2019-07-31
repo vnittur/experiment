@@ -1,0 +1,3 @@
+class CreateOrderResponse {
+    url: string;
+}

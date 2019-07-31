@@ -7,6 +7,8 @@ import { ListItemsComponent } from './list-items/list-items.component';
 import { BuyComponent } from './buy/buy.component';
 import { OrderComponent } from './order/order.component';
 import { RouterModule, Routes } from '@angular/router';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { DatePipe } from '@angular/common';
 
 
 const appRoutes: Routes = [
@@ -28,14 +30,16 @@ const appRoutes: Routes = [
     OrderComponent
   ],
   imports: [
+       
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule,
     RouterModule.forRoot(
       appRoutes,
       { enableTracing: true } // <-- debugging purposes only
     )
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

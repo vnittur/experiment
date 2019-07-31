@@ -1,10 +1,14 @@
 package com.github.vnittur.payment.gateway.instamojo;
 
+import javax.ws.rs.Consumes;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -56,7 +60,17 @@ public class PaymentGatewayController
 		return null;
 	}
 	
-	private void createPaymentOrder()
+    @PostMapping("/order/create")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+	public CreateOrderResponse createOrder()
+	{
+    	CreateOrderResponse response = new CreateOrderResponse();
+    	response.url =createPaymentOrder();; 
+		return response;
+	}
+	
+	private String createPaymentOrder()
 	{
 		ApiContext context = ApiContext.create(CLIENT_ID, CLIENT_SECRET, ApiContext.Mode.TEST);
 		Instamojo api = new InstamojoImpl(context);
@@ -71,13 +85,14 @@ public class PaymentGatewayController
 		order.setCurrency("INR");
 		order.setAmount(9D);
 		order.setDescription("This is a test transaction.");
-		order.setRedirectUrl(" http://38e7a81c.ngrok.io/");
-		order.setWebhookUrl(" http://38e7a81c.ngrok.io/payment/webhook");
-		order.setTransactionId("dxg23522");
+		order.setRedirectUrl(" http://dc0176ce.ngrok.io");
+		order.setWebhookUrl(" http://dc0176ce.ngrok.io/payment/webhook");
+		order.setTransactionId("dxg23524" + System.currentTimeMillis());
 
 		try {
 		    PaymentOrderResponse paymentOrderResponse = api.createPaymentOrder(order);
 		    System.out.println(paymentOrderResponse.getPaymentOptions().getPaymentUrl());
+		    return paymentOrderResponse.getPaymentOptions().getPaymentUrl();
 
 		} catch (HTTPException e) {
 		    System.out.println(e.getStatusCode());
@@ -87,6 +102,8 @@ public class PaymentGatewayController
 		} catch (ConnectionException e) {
 		    System.out.println(e.getMessage());
 		}
+		
+		return null;
 	}
 	
 	public void confirmPayment()
